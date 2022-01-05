@@ -11,7 +11,7 @@ namespace Products.Repository
 {
     class ProductsRepo
     {
-        private string connStr = "Server=localhost;Port=5432;Database=cpbd2145;User Id=cpbd2145;Password=cpbd2145";
+        private string connStr = "Server=localhost;Port=5455;Database=rvbd2176;User Id=rvbd2176;Password=rvbd2176";
         
         public List<StockStatusType> GetAllStockTypes()
         {

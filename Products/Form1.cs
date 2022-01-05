@@ -30,49 +30,66 @@ namespace Products
 
         private void UpdateTypes()
         {
-            dataGridView2.Rows.Clear();
-            comboBox1.Items.Clear();
+            typesGridView.Rows.Clear();
+            createUpdateComboBox.Items.Clear();
 
             foreach (var type in productsRepo.GetAllStockTypes())
             {
-                dataGridView2.Rows.Add(type.SId, type.Name);
-                comboBox1.Items.Add(type);
+                typesGridView.Rows.Add(type.SId, type.Name);
+                createUpdateComboBox.Items.Add(type);
             }
         }
         private void UpdateProducts()
         {
-            dataGridView1.Rows.Clear();
-            comboBox2.Items.Clear();
+            productsGridView.Rows.Clear();
+            deleteComboBox.Items.Clear();
 
             foreach (var product in productsRepo.GetAllProducts())
             {
-                dataGridView1.Rows.Add(product.Name, product.Price, product.StockStatusType.Name, product.UpdatedAt);
-                comboBox2.Items.Add(product);
+                productsGridView.Rows.Add(product.Name, product.Price, product.StockStatusType.Name, product.UpdatedAt);
+                deleteComboBox.Items.Add(product);
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void CreateUpdateButton_Click(object sender, EventArgs e)
         {
-            if(textBox1.Text == "") { return; }
+            if(nameTextBox.Text == "") {
+                ShowMessageBox("Name should not be empty!");
+                return; 
+            }
 
-            if(!float.TryParse(textBox2.Text, out float price)) { return; }
+            if(!float.TryParse(priceTextBox.Text, out float price)) {
+                ShowMessageBox("Price should be a number!");
+                return; 
+            }
 
-            if (comboBox1.SelectedItem == null) { return; }
+            if (createUpdateComboBox.SelectedItem == null) {
+                ShowMessageBox("Product type should not be empty!");
+                return; 
+            }
 
 
-            var name = textBox1.Text;
-            var sid = (comboBox1.SelectedItem as StockStatusType).SId;
+            var name = nameTextBox.Text;
+            var sid = (createUpdateComboBox.SelectedItem as StockStatusType).SId;
 
             productsRepo.CreateOrUpdateProduct(name, price, sid);
             UpdateProducts();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void DeleteButton_Click(object sender, EventArgs e)
         {
-            if (comboBox2.SelectedItem == null) { return; }
+            if (deleteComboBox.SelectedItem == null) {
+                ShowMessageBox("Product should not be empty!");
+                return; 
+            }
 
-            productsRepo.DeleteProduct(comboBox2.SelectedItem as Product);
+            productsRepo.DeleteProduct(deleteComboBox.SelectedItem as Product);
             UpdateProducts();
+        }
+
+        private void ShowMessageBox(string text)
+        {
+            MessageBox.Show(text);
         }
     }
 }
