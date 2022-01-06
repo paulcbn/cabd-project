@@ -50,14 +50,23 @@ namespace Products
             this.ProductStockStatusColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProductUpdatedAtColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tMomentButton = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tMomentDatePicker = new System.Windows.Forms.DateTimePicker();
+            this.tMomentTextBox = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.customProductGrid = new System.Windows.Forms.DataGridView();
+            this.CustomProductNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CustomProductPriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CustomUpdatedAtColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CustomStatusTypeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.typesGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.productsGridView)).BeginInit();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.customProductGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -288,15 +297,69 @@ namespace Products
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.dataGridView1);
+            this.tabPage2.Controls.Add(this.customProductGrid);
+            this.tabPage2.Controls.Add(this.tMomentButton);
+            this.tabPage2.Controls.Add(this.label6);
+            this.tabPage2.Controls.Add(this.label5);
+            this.tabPage2.Controls.Add(this.tMomentDatePicker);
+            this.tabPage2.Controls.Add(this.tMomentTextBox);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage2.Size = new System.Drawing.Size(1334, 820);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.Text = "Stare Moment t";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // tMomentButton
+            // 
+            this.tMomentButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tMomentButton.Location = new System.Drawing.Point(420, 645);
+            this.tMomentButton.Name = "tMomentButton";
+            this.tMomentButton.Size = new System.Drawing.Size(510, 44);
+            this.tMomentButton.TabIndex = 5;
+            this.tMomentButton.Text = "Evaluate";
+            this.tMomentButton.UseVisualStyleBackColor = true;
+            this.tMomentButton.Click += new System.EventHandler(this.CustomProductButton_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(415, 588);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(69, 29);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "Time";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(415, 538);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(78, 29);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Name";
+            // 
+            // tMomentDatePicker
+            // 
+            this.tMomentDatePicker.CustomFormat = "yyyy/MM/dd hh:mm:ss tt";
+            this.tMomentDatePicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tMomentDatePicker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.tMomentDatePicker.Location = new System.Drawing.Point(535, 588);
+            this.tMomentDatePicker.Name = "tMomentDatePicker";
+            this.tMomentDatePicker.Size = new System.Drawing.Size(395, 34);
+            this.tMomentDatePicker.TabIndex = 2;
+            // 
+            // tMomentTextBox
+            // 
+            this.tMomentTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tMomentTextBox.Location = new System.Drawing.Point(535, 535);
+            this.tMomentTextBox.Name = "tMomentTextBox";
+            this.tMomentTextBox.Size = new System.Drawing.Size(395, 34);
+            this.tMomentTextBox.TabIndex = 1;
             // 
             // tabPage3
             // 
@@ -309,15 +372,52 @@ namespace Products
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // customProductGrid
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(250, 26);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(776, 481);
-            this.dataGridView1.TabIndex = 0;
+            this.customProductGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.customProductGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.CustomProductNameColumn,
+            this.CustomProductPriceColumn,
+            this.CustomUpdatedAtColumn,
+            this.CustomStatusTypeColumn});
+            this.customProductGrid.Location = new System.Drawing.Point(345, 85);
+            this.customProductGrid.Name = "customProductGrid";
+            this.customProductGrid.RowHeadersWidth = 51;
+            this.customProductGrid.RowTemplate.Height = 24;
+            this.customProductGrid.Size = new System.Drawing.Size(649, 374);
+            this.customProductGrid.TabIndex = 6;
+            // 
+            // CustomProductNameColumn
+            // 
+            this.CustomProductNameColumn.HeaderText = "Product Name";
+            this.CustomProductNameColumn.MinimumWidth = 6;
+            this.CustomProductNameColumn.Name = "CustomProductNameColumn";
+            this.CustomProductNameColumn.ReadOnly = true;
+            this.CustomProductNameColumn.Width = 125;
+            // 
+            // CustomProductPriceColumn
+            // 
+            this.CustomProductPriceColumn.HeaderText = "Price";
+            this.CustomProductPriceColumn.MinimumWidth = 6;
+            this.CustomProductPriceColumn.Name = "CustomProductPriceColumn";
+            this.CustomProductPriceColumn.ReadOnly = true;
+            this.CustomProductPriceColumn.Width = 125;
+            // 
+            // CustomUpdatedAtColumn
+            // 
+            this.CustomUpdatedAtColumn.HeaderText = "Updated At";
+            this.CustomUpdatedAtColumn.MinimumWidth = 6;
+            this.CustomUpdatedAtColumn.Name = "CustomUpdatedAtColumn";
+            this.CustomUpdatedAtColumn.ReadOnly = true;
+            this.CustomUpdatedAtColumn.Width = 125;
+            // 
+            // CustomStatusTypeColumn
+            // 
+            this.CustomStatusTypeColumn.HeaderText = "Status Type";
+            this.CustomStatusTypeColumn.MinimumWidth = 6;
+            this.CustomStatusTypeColumn.Name = "CustomStatusTypeColumn";
+            this.CustomStatusTypeColumn.ReadOnly = true;
+            this.CustomStatusTypeColumn.Width = 125;
             // 
             // Form1
             // 
@@ -335,7 +435,8 @@ namespace Products
             ((System.ComponentModel.ISupportInitialize)(this.typesGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.productsGridView)).EndInit();
             this.tabPage2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.customProductGrid)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -364,7 +465,16 @@ namespace Products
         private System.Windows.Forms.Button deleteButton;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox deleteComboBox;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button tMomentButton;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DateTimePicker tMomentDatePicker;
+        private System.Windows.Forms.TextBox tMomentTextBox;
+        private System.Windows.Forms.DataGridView customProductGrid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CustomProductNameColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CustomProductPriceColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CustomUpdatedAtColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CustomStatusTypeColumn;
     }
 }
 

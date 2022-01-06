@@ -40,6 +40,7 @@ INSERT INTO products (name, price, sid, deleted, updated_at) VALUES ('Pear', 20,
 
 
 SELECT * FROM stock_status_types;
+SELECT * FROM products;
 
 
 SELECT name, MAX(updated_at) as updated_at  FROM products GROUP BY name
@@ -50,7 +51,20 @@ INNER JOIN stock_status_types Z ON
 X.sid = Z.sid
 
 
-SELECT * FROM products
-INNER JOIN (SELECT MAX(updated_at) FROM (SELECT * FROM products WHERE updated_at <= '2022-01-05 17:11:30' and name='Apple') X) Y ON Y.max = updated_at
-WHERE name='Apple'
+SELECT P.pid, P.name, P.price, S.sid, S.name, P.deleted, P.updated_at FROM products as P
+INNER JOIN (
+	SELECT MAX(updated_at) as time FROM 
+		(SELECT * FROM products WHERE updated_at <= '2022-01-05 17:11:30' and name='Apple') X) Y 
+ON Y.time = P.updated_at
+INNER JOIN stock_status_types as S ON S.sid = P.sid
+WHERE P.name='Apple'
+
+
+
+SELECT P.pid, P.name, P.price, S.sid, S.name, P.deleted, P.updated_at FROM products as P
+INNER JOIN(SELECT MAX(updated_at) as time FROM (SELECT * FROM products WHERE updated_at <= '2022-01-05 17:11:30' and name = 'Apple') X) Y
+ON Y.time = P.updated_at
+INNER JOIN stock_status_types as S
+ON S.sid = P.sid
+WHERE P.name = 'Apple'
 

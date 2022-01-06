@@ -1,4 +1,5 @@
 ﻿using Npgsql;
+using NpgsqlTypes;
 using Products.Models;
 using System;
 using System.Collections.Generic;
@@ -76,6 +77,26 @@ namespace Products.Repository
             return result;
         }
 
+        public void CreateOrUpdateProduct(string name, float price, int sid)
+        {
+            using (NpgsqlConnection conn = new NpgsqlConnection(connStr))
+            {
+                conn.Open();
+                NpgsqlCommand command = new NpgsqlCommand();
+                command.Connection = conn;
+                command.CommandType = CommandType.Text;
+                command.CommandText = "INSERT INTO products (name, price, sid, deleted, updated_at) VALUES(@name, @price, @sid, FALSE, NOW())";
+
+                command.Parameters.AddWithValue("name", name);
+                command.Parameters.AddWithValue("price", price);
+                command.Parameters.AddWithValue("sid", sid);
+
+                command.ExecuteNonQuery();
+
+                command.Dispose();
+            }
+        }
+
         public void DeleteProduct(Product product)
         {
             using (NpgsqlConnection conn = new NpgsqlConnection(connStr))
@@ -96,25 +117,44 @@ namespace Products.Repository
             }
         }
 
-        public void CreateOrUpdateProduct(string name, float price, int sid)
+        public Product GetCustomStateProduct(string name, DateTime time)
         {
+            Product prod = null;
             using (NpgsqlConnection conn = new NpgsqlConnection(connStr))
             {
                 conn.Open();
                 NpgsqlCommand command = new NpgsqlCommand();
                 command.Connection = conn;
                 command.CommandType = CommandType.Text;
-                command.CommandText = "INSERT INTO products (name, price, sid, deleted, updated_at) VALUES(@name, @price, @sid, FALSE, NOW())";
+                command.CommandText = "SELECT P.pid, P.name, P.price, S.sid, S.name, P.deleted, P.updated_at FROM products as P " +
+                    "INNER JOIN(SELECT MAX(updated_at) as time FROM (SELECT * FROM products WHERE updated_at <= @time and name = @productName) X) Y " +
+                    "ON Y.time = P.updated_at " +
+                    "INNER JOIN stock_status_types as S " +
+                    "ON S.sid = P.sid " +
+                    "WHERE P.name = @productName";
 
-                command.Parameters.AddWithValue("name", name);
-                command.Parameters.AddWithValue("price", price);
-                command.Parameters.AddWithValue("sid", sid);
+                command.Parameters.AddWithValue("productName", name);
+                command.Parameters.AddWithValue("time", time);
 
-                command.ExecuteNonQuery();
-              
+                NpgsqlDataReader dr = command.ExecuteReader();
+                while(dr.Read())
+                {
+                    var pid = dr.GetInt32(0);
+                    var productName = dr.GetString(1);
+                    var price = dr.GetFloat(2);
+                    var sid = dr.GetInt32(3);
+                    var typeName = dr.GetString(4);
+                    var deleted = dr.GetBoolean(5);
+                    var updatedAt = dr.GetDateTime(6);
+
+                    prod = new Product(pid, productName, price, new StockStatusType(sid, typeName), deleted, updatedAt);
+                    break;
+                }
+
                 command.Dispose();
             }
 
+            return prod;
         }
 
         void debug()

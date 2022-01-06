@@ -87,6 +87,23 @@ namespace Products
             UpdateProducts();
         }
 
+        private void CustomProductButton_Click(object sender, EventArgs e)
+        {
+            if (tMomentTextBox.Text == "")
+            {
+                ShowMessageBox("Name should not be empty!");
+                return;
+            }
+
+            customProductGrid.Rows.Clear();
+            var prod = productsRepo.GetCustomStateProduct(tMomentTextBox.Text, tMomentDatePicker.Value);
+
+            if (prod != null)
+            {
+                customProductGrid.Rows.Add(prod.Name, prod.Price.ToString(), prod.UpdatedAt.ToString(), prod.StockStatusType.Name);
+            }
+        }
+
         private void ShowMessageBox(string text)
         {
             MessageBox.Show(text);
