@@ -68,3 +68,17 @@ INNER JOIN stock_status_types as S
 ON S.sid = P.sid
 WHERE P.name = 'Apple'
 
+WITH partitions as (
+SELECT name, price, updated_at,
+case
+	when lag(price, 1, '-1'::REAL) OVER (PARTITION BY name ORDER BY updated_at) <> price then 1
+	else 0
+end as start_partition
+FROM products
+), 
+partitions2 as (SELECT *, SUM(start_partition) OVER(PARTITION BY name ORDER BY updated_at) as partition_number FROM partitions),
+partitions3 as (SELECT *, first_value(updated_at) OVER(PARTITION BY name, partition_number ORDER BY updated_at) as begin_date, last_value(updated_at) OVER(PARTITION BY name, partition_number ORDER BY updated_at RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) as end_date FROM partitions2),
+mins as (SELECT name, min(price) as price from products group by name)
+SELECT DISTINCT P.name, P.price, P.begin_date, P.end_date from partitions3 P
+INNER JOIN mins M on M.price = P.price AND M.name = P.name
+

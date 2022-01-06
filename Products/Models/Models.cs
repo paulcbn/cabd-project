@@ -49,4 +49,40 @@ namespace Products.Models
         }
 
     }
+
+    public class ProductInterval
+    {
+        public ProductInterval(string name, float price, DateTime beginDate, DateTime endDate, TimeSpan interval)
+        {
+            Name = name;
+            Price = price;
+            BeginDate = beginDate;
+            EndDate = endDate;
+            Interval = interval;
+        }
+
+        public string Name { get; set; }
+        public float Price { get; set; }
+        public DateTime BeginDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public TimeSpan Interval { get; set; }
+    }
+
+    public class ProductDelta
+    {
+        public ProductDelta(string name, float price, DateTime updatedAt, TimeSpan deltaTime, float deltaPrice)
+        {
+            Name = name;
+            Price = price;
+            UpdatedAt = updatedAt;
+            DeltaTime = deltaTime;
+            DeltaPrice = deltaPrice;
+        }
+
+        public string Name { get; set; }
+        public float Price { get; set; }
+        public DateTime UpdatedAt { get; set; }
+        public TimeSpan DeltaTime { get; set; }
+        public float DeltaPrice { get; set; }
+    }
 }
