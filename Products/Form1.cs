@@ -142,7 +142,7 @@ namespace Products
             MessageBox.Show(text);
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void RefreshButton_Click(object sender, EventArgs e)
         {
             UpdateIntervals();
         }
